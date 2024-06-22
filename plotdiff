@@ -1,0 +1,166 @@
+
+data = readtable('Pattern.xlsx', 'Sheet', 'Sheet1');
+data = removevars(data, "Var2");
+data = removevars(data, "Var6");
+data = removevars(data, "Var7");
+data = removevars(data, "Var8");
+data=table2array(data);
+
+sample1=data(:,5);
+
+ref1=data(:,2);
+ref2=data(:,3);
+ref3=data(:,4);
+refA = ref1+ref2;
+refB=ref2+ref3;
+refC= ref1+ref2;
+refD=ref1+ref2+refC;
+X =data(:,1);
+
+
+dRef1=0;
+for i=1:size(ref1)
+    dRef1=dRef1 +abs(ref1(i)-sample1(i));
+end
+
+dRef1 = dRef1/size(ref1,1);
+%disp(dRef1);
+
+dRef2=0;
+for i=1:size(ref2)
+    dRef2=dRef2 +abs(ref2(i)-sample1(i));
+end
+
+dRef2 = dRef2/size(ref2,1);
+%disp(dRef2);
+
+
+
+dRef3=0;
+for i=1:size(ref3)
+    dRef3=dRef3 +abs(ref3(i)-sample1(i));
+end
+
+dRef3 = dRef3/size(ref3,1);
+%disp(dRef3);
+
+
+
+dRefA=0;
+for i=1:size(refA)
+    dRefA=dRefA +abs(refA(i)-sample1(i));
+end
+
+dRefA = dRefA/size(refA,1);
+%disp(dRefA);
+
+
+
+
+
+
+
+
+
+dRefB3=0;
+for i=1:size(refB)
+    dRefB=dRefB3 +abs(refB(i)-sample1(i));
+end
+
+dRefB = dRefB/size(refB,1);
+%disp(dRefB);
+
+
+
+
+
+
+
+dRefC=0;
+for i=1:size(refC)
+    dRefC=dRefC +abs(refC(i)-sample1(i));
+end
+
+dRefC = dRefC/size(refC,1);
+%disp(dRefC);
+
+
+
+
+
+dRefD=0;
+for i=1:size(refD)
+    dRefD=dRefD +abs(refD(i)-sample1(i));
+end
+
+dRefD = dRef3/size(ref3,1);
+%disp(dRefD);
+
+
+alldRef=[ dRef1,dRef2,dRef3,dRefA,dRefB,dRefC,dRefD];
+minNum= min(alldRef);
+idx = find(alldRef==minNum);
+disp("The closest match is: ")
+switch idx
+    case 1
+        disp('Reference 1');
+    case 2
+        disp('Reference 2');
+    case 3
+        disp('Reference 3');
+    case 4
+        disp('Reference 1+2');
+    case 5
+        disp('Reference 2+3');
+    case 6
+        disp('Reference 1+3');
+    case 7
+        disp('Reference 1+2+3');
+    
+end
+
+disp("Sheriff, here are all the deltas. I selected the above match based on the lowest delta: ");
+for i=1:size(alldRef,2)
+    x="";
+    switch i
+    case 1
+        x='REF 1';
+    case 2
+        x='REF 2';
+    case 3
+        x='REF 3';
+    case 4
+        x='REF 1+2';
+    case 5
+        x='REF 2+3';
+    case 6
+        x='REF 1+3';
+    case 7
+        x='REF 1+2+3';
+    
+    end
+    disp("The delta for "+x+" is: "+num2str(alldRef(i)))
+
+
+end
+
+plot(X,sample1);
+hold on;
+plot(X,ref1);
+plot(X,ref2);
+plot(X,ref3);
+plot(X,refA);
+plot(X,refB);
+plot(X,refC);
+plot(X,refD);
+hold off;
+
+title('Comparison based on the best score');
+xlabel('Degrees');
+ylabel('Result');
+legend('Sample','REF 1','REF 2','REF 3','REF 1+2','REF 2+3','REF 1+3','REF 1+2+3');
+
+
+
+
+    
