@@ -119,7 +119,7 @@ switch idx
     
 end
 
-disp("Sheriff, here are all the deltas. I selected the above match based on the lowest delta: ");
+disp("Here are all the deltas. I selected the above match based on the lowest delta: ");
 for i=1:size(alldRef,2)
     x="";
     switch i
